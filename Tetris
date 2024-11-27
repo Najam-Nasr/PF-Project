@@ -74,22 +74,13 @@ struct tetris_level levels[] =
     {40000, 400000},
     {75000, 300000},
     {100000, 200000}
-};z
+};z;
 
-#define TETRIS_PIECES (sizeof(blocks)/sizeof(struct tetris_block))
-#define TETRIS_LEVELS (sizeof(levels)/sizeof(struct tetris_level))
+int TETRIS_PIECES = sizeof(blocks) / sizeof(struct tetris_block);
+int TETRIS_LEVELS = sizeof(levels) / sizeof(struct tetris_level);
 
-void tetris_cleanup_io() {
-  
-}
 
-void tetris_signal_quit(int s) {
-    tetris_cleanup_io();
-}
 
-void tetris_set_ioconfig() {
- 
-}
 
 void tetris_init(struct tetris *t, int w, int h) {
     int x, y;
