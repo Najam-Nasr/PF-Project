@@ -52,8 +52,8 @@ struct tetris_block blocks[] =
     3, 2, 'Z'}, 
     
     {{"###",
-      " # "},
-    3, 2, 'C'}, 
+      " #"},
+    3,2, 'C'}, 
     
     {{"###",
       "###",
@@ -63,7 +63,7 @@ struct tetris_block blocks[] =
 
 int TETRIS_PIECES = sizeof(blocks) / sizeof(struct tetris_block);
 
-void tetris_init(int w, int h) {
+void tetris_init(int w, int h){
     int x, y;
     t.level = 1;
     t.score = 0;
