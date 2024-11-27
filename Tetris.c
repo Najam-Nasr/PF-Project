@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>  
+#include <stdlib.h>  
 #include <windows.h> 
 
 struct tetris_level {
@@ -31,34 +30,34 @@ struct tetris_block blocks[] =
       "##"},
     2, 2, '@'}, 
 
-    {{" XX",
-      "XXX"},
+    {{" ##",
+      "###"},
     3, 2, 'T'},  
     
-    {{"@@@@@"}, 
+    {{"####"}, 
      5, 1, '-'}, 
     
-    {{"OO",
-      "O ",
-      "O "},
+    {{"##",
+      "# ",
+      "# "},
     2, 3, 'L'}, 
     
-    {{"&&",
-      " &",
-      " &"},
+    {{"##",
+      " #",
+      " #"},
     2, 3, 'J'}, 
     
-    {{"ZZ ",
-      " ZZ"},
+    {{"## ",
+      " ##"},
     3, 2, 'Z'}, 
     
-    {{"XXX",
-      " X "},
+    {{"###",
+      " # "},
     3, 2, 'C'}, 
     
-    {{"$$$",
-      "$$$",
-      "$$$"},
+    {{"###",
+      "###",
+      "###"},
     3, 3, 'B'}  
 };
 
@@ -99,9 +98,7 @@ void tetris_print() {
     for (y = 0; y < t.h; y++) {
         printf("!");
         for (x = 0; x < t.w; x++) {
-            if (x >= t.x && y >= t.y 
-                && x < (t.x + t.current.w) && y < (t.y + t.current.h) 
-                && t.current.data[y - t.y][x - t.x] != ' ') {
+            if (x >= t.x && y >= t.y && x < (t.x + t.current.w) && y < (t.y + t.current.h) && t.current.data[y - t.y][x - t.x] != ' ') {
                 printf("%c ", t.current.block_char); 
             } else {
                 printf("%c ", t.game[x][y]);
@@ -126,8 +123,7 @@ int tetris_hittest() {
                 return 1;
             }
             if (b.data[y][x] != ' ') {
-                if ((Y >= t.h) || 
-                    (X >= 0 && X < t.w && Y >= 0 && t.game[X][Y] != ' ')) {
+                if ((Y >= t.h) || (X >= 0 && X < t.w && Y >= 0 && t.game[X][Y] != ' ')) {
                     return 1;
                 }
             }
