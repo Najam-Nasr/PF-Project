@@ -3,8 +3,6 @@
 #include <conio.h>  
 #include <windows.h> 
 
-
-
 struct tetris_level {
     int score;
     int nsec;
@@ -25,8 +23,7 @@ struct tetris {
     } current;
     int x;
     int y;
-}t;
-
+} t;
 
 struct tetris_block blocks[] =
 {
@@ -65,25 +62,21 @@ struct tetris_block blocks[] =
     3, 3, 'B'}  
 };
 
-
-
 int TETRIS_PIECES = sizeof(blocks) / sizeof(struct tetris_block);
 
-
-
-
-void tetris_init( int w, int h) {
+void tetris_init(int w, int h) {
     int x, y;
     t.level = 1;
     t.score = 0;
     t.gameover = 0;
     t.w = w;
     t.h = h;
-    t.game = malloc(sizeof(char *)*w);
+    t.game = malloc(sizeof(char *) * w);
     for (x = 0; x < w; x++) {
         t.game[x] = malloc(sizeof(char) * h);
-        for (y = 0; y < h; y++)
+        for (y = 0; y < h; y++) {
             t.game[x][y] = ' ';
+        }
     }
 }
 
@@ -97,10 +90,11 @@ void tetris_clean() {
 
 void tetris_print() {
     int x, y;
-    system("cls"); 
+    system("cls");  
     printf("[LEVEL: %d | SCORE: %d]\n", t.level, t.score);
-    for (x = 0; x < 2 * t.w + 2; x++)
+    for (x = 0; x < 2 * t.w + 2; x++) {
         printf("~");
+    }
     printf("\n");
     for (y = 0; y < t.h; y++) {
         printf("!");
@@ -115,20 +109,22 @@ void tetris_print() {
         }
         printf("!\n");
     }
-    for (x = 0; x < 2 * t.w + 2; x++)
+    for (x = 0; x < 2 * t.w + 2; x++) {
         printf("~");
+    }
     printf("\n");
 }
 
 int tetris_hittest() {
     int x, y, X, Y;
     struct tetris_block b = t.current;
-    for (x = 0; x < b.w; x++)
+    for (x = 0; x < b.w; x++) {
         for (y = 0; y < b.h; y++) {
             X = t.x + x;
             Y = t.y + y;
-            if (X < 0 || X >= t.w)
+            if (X < 0 || X >= t.w) {
                 return 1;
+            }
             if (b.data[y][x] != ' ') {
                 if ((Y >= t.h) || 
                     (X >= 0 && X < t.w && Y >= 0 && t.game[X][Y] != ' ')) {
@@ -136,6 +132,7 @@ int tetris_hittest() {
                 }
             }
         }
+    }
     return 0;
 }
 
@@ -154,10 +151,11 @@ void tetris_rotate() {
     int x, y;
     b.w = s.h;
     b.h = s.w;
-    for (x = 0; x < s.w; x++)
+    for (x = 0; x < s.w; x++) {
         for (y = 0; y < s.h; y++) {
             b.data[x][y] = s.data[s.h - y - 1][x];
         }
+    }
     int x_pos = t.x;
     int y_pos = t.y;
     t.x -= (b.w - s.w) / 2;
@@ -186,34 +184,29 @@ void tetris_gravity() {
 }
 
 void tetris_run(int w, int h) {
-    struct tetris t;
-    tetris_init( w, h);
+    tetris_init(w, h);
     tetris_new_block();
 
     while (!t.gameover) {
         tetris_print();
 
-        if (kbhit()) {
-            char cmd = getch(); 
-            switch (cmd) {
-                case 'a':
-                    t.x--;
-                    if (tetris_hittest())
-                        t.x++;
-                    break;
-                case 'd':
-                    t.x++;
-                    if (tetris_hittest())
-                        t.x--;
-                    break;
-                case 'w':
-                    tetris_rotate();
-                    break;
+        if (GetAsyncKeyState('A') & 0x8000) {  
+            t.x--;
+            if (tetris_hittest()) {
+                t.x++;
             }
         }
+        if (GetAsyncKeyState('D') & 0x8000) { 
+            t.x++;
+            if (tetris_hittest()) {
+                t.x--;
+            }
+        }
+        if (GetAsyncKeyState('W') & 0x8000) {  
+            tetris_rotate();
+        }
 
-       
-        Sleep(300); 
+        Sleep(300);  
         tetris_gravity();
     }
 
